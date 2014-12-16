@@ -1,0 +1,31 @@
+<?php 	
+	$connection = new Mongo ();
+	$db = $connection-> selectDB ("bdjuegos");
+	$db->drop();
+	$db = $connection-> selectDB ("bdjuegos");
+	$coleccion = $db->juegos;
+	
+	$url = "http://www.giantbomb.com/api/games/?api_key=f42228a5e1df252ab86d6f56e00fb92e10c30947&format=json&field_list=name,description";
+    $data = file_get_contents($url);
+	$data_array = json_decode($data,true);
+	
+	$cont = 0;
+	while(isset($data_array['results'][$cont])){
+		$nombre = $data_array['results'][$cont]['name'];
+		$descripcion = $data_array['results'][$cont]['description'];
+		$documento = array( "nombre" => $nombre, "descripcion" => $descripcion );
+		$coleccion->insert($documento);
+		$cont++;
+	}
+	
+	
+	header('location:/prueba/juegos/');
+	$cursor = $coleccion->find();
+	// recorrer el resultado
+	foreach ($cursor as $documento) {
+	    echo $documento["nombre"];
+	}
+	die();
+ ?>
+ 
+ <h1>Hello!</h1> <a href="/prueba/juegos/filtrar">Sign Up Here!</a>

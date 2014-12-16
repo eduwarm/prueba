@@ -1,0 +1,14 @@
+<h2><b>Listado de juegos encontrados</b></h2>
+<a href="/prueba/juegos">Volver</a>
+<br/><br/>
+<table border="2px solid black" cellpadding="20px">
+<?php 
+	foreach($juegos as $juego){
+		echo "<tr><td>";
+		echo "<h2>".$juego['nombre']."</h2>";
+		echo "</td><td>";
+		echo $juego['descripcion'];
+		echo "</td></tr>";
+	}
+?>
+</table>
